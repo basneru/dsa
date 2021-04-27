@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Genrere firkant - JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #innskriving {
+      height: 100px;
+      width: 300px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background-color: rgba(220, 220, 220, 0.5);
+      padding: 10px;
+      margin-top: 2%;
+      margin-left: 2%;
+    }
+
+    canvas {
+      position: absolute;
+      top: 200px;
+      left: 30px;
+      /*border: 1px solid #333;*/
+    }
+
+    #ut {
+      font-size: 18px;
+      position: absolute;
+      top: 20px;
+      left: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="innskriving">
+    <h2>Firkantgenerator</h2>
+      <span for="inpBredde">Bredde: </span>
+      <input type="text" id="inpBredde" placeholder="Tall mellom 1 og 9" size="14px">
+      <button id="btn" type="button">Generer</button>
+    </div>
+    <div id="tegning">
+      <canvas width="450" height="450" id="mittCanvas"></canvas>
+      <p id="ut"></p>
+    </div>
+  </div>
+
+
+  <script>
+    //---Referering til relevante html-elementer------------------------------------------------------------------------
+    const inpBredde = document.getElementById("inpBredde");
+    const btn = document.getElementById("btn");
+    const ut = document.getElementById("ut");
+    const canvas = document.getElementById("mittCanvas");
+    const ctx = canvas.getContext("2d");
+
+
+    //----Funksjon som regner ut høyde på kvadrat og arealet
+    function regnUt(){
+      let bredde = Number(inpBredde.value) * 50;
+      let hoyde = 500 - bredde;
+      let areal = bredde * hoyde;
+      ctx.fillStyle = "#c7ecee";
+      ctx.fillRect(0, 0, bredde, hoyde);
+      ctx.lineStyle = "#333";
+      ctx.strokeRect(0, 0, bredde, hoyde);
+      ut.innerHTML = "Når du velger bredde "+bredde / 50+" cm, får vi en høyde på "+hoyde / 50+" cm.<br>";
+      ut.innerHTML += "Her vil arealet av rektangelet bli "+areal / 2500+" cm²";
+    }
+
+    //----Funksjon som hindrer bruker i å skrive tall mellom 1 og 9-----------------------------------------------------
+    btn.addEventListener('click', () => {
+      if(inpBredde.value < 1 || inpBredde.value > 9){
+        alert("Du må velge en verdi mellom 1 og 9.");
+        return inpBredde.value = "";
+      }
+      return regnUt();
+    })
+  </script>
+  
+</body>
+</html>
